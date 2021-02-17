@@ -4,6 +4,7 @@
       v-for="value in filteredResults"
       :key="value.contract || value.id"
       :tokenData="value"
+      is-favourites
     />
   </div>
   <div v-else class="tokens-msg">{{ $t('pages.fungible-tokens.no-results') }}</div>

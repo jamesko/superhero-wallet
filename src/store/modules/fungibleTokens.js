@@ -1,3 +1,4 @@
+import Vue from 'vue';
 import FUNGIBLE_TOKEN_CONTRACT from 'aeternity-fungible-token/FungibleTokenFullInterface.aes';
 import BigNumber from 'bignumber.js';
 import { unionBy } from 'lodash-es';
@@ -10,6 +11,7 @@ export default {
     tokenBalances: [],
     selectedToken: null,
     aePublicData: {},
+    favouriteTokens: [],
   },
   mutations: {
     setSelectedToken(state, payload) {
@@ -26,6 +28,14 @@ export default {
     },
     setAePublicData(state, payload) {
       state.aePublicData = payload;
+    },
+    toggleFavouriteToken(state, contract) {
+      const index = state.favouriteTokens.findIndex((c) => c === contract);
+      if (index !== -1) {
+        Vue.delete(state.favouriteTokens, index);
+      } else {
+        Vue.set(state.favouriteTokens, state.favouriteTokens.length, contract);
+      }
     },
   },
   actions: {
