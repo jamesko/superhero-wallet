@@ -419,14 +419,18 @@
       "allowances-info": "Give or take an allowance",
       "mint": "Mint/Burn token",
       "mint-info": "This allows you to mint or burn token amount",
-      "tokens": "Tokens",
       "searchPlaceholder": "Search by token name or community...",
-      "all": "All",
-      "myTokens": "My Tokens",
+      "balances": "Portfolio",
+      "all": "All tokens",
+      "favourites": "Favourites",
+      "balances-title": "Balances",
       "mcap": "MCap",
       "price": "Price",
       "not-available": "N/A",
-      "no-results": "There are no tokens to display"
+      "no-results": "There are no tokens to display",
+      "name": "Name",
+      "recent": "Recent",
+      "trending": "Trending"
     },
     "token-details": {
       "details": "Details",
