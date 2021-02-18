@@ -16,11 +16,13 @@
       <Search v-else class="search-icon" />
     </div>
     <TabsMenu v-model="activeTab" :tabOptions="tabs" />
-    <TokensList :show-my-tokens="activeTab === tabs[1].name" :searchTerm="searchTerm" />
+    <TokensList is-favourites :list="tokenList" :searchTerm="searchTerm" />
   </div>
 </template>
 
 <script>
+import { pick } from 'lodash-es';
+import { mapState } from 'vuex';
 import TabsMenu from '../../components/TabsMenu';
 import TokensList from '../../components/FungibleTokens/TokensList';
 import TokenPiles from '../../../../icons/token-piles.svg?vue-component';
@@ -52,6 +54,47 @@ export default {
         },
       ],
     };
+  },
+  subscriptions() {
+    return pick(this.$store.state.observables, ['balance', 'balanceCurrency']);
+  },
+  computed: {
+    ...mapState('fungibleTokens', ['tokenBalances', 'availableTokens', 'aePublicData']),
+
+    /**
+     * Returns the default aeternity meta information
+     */
+    aeternityToken() {
+      return this.aePublicData && Object.keys(this.aePublicData).length > 0
+        ? [
+            {
+              ...this.aePublicData,
+              convertedBalance: this.balance,
+              symbol: 'AE',
+              balanceCurrency: this.balanceCurrency,
+              contract: 'aeternity',
+            },
+          ]
+        : [];
+    },
+    /**
+     * Converts the token information object into a searchable list
+     */
+    tokenInfo() {
+      return Object.entries(this.availableTokens).map(([contract, tokenData]) => ({
+        name: tokenData.name,
+        symbol: tokenData.symbol,
+        contract,
+        decimals: tokenData.decimals,
+        convertedBalance: tokenData.convertedBalance,
+      }));
+    },
+    tokenList() {
+      return [
+        ...this.aeternityToken,
+        ...(this.activeTab === this.tabs[1].name ? this.tokenBalances : this.tokenInfo),
+      ];
+    },
   },
 };
 </script>
