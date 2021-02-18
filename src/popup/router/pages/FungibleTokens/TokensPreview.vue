@@ -2,15 +2,24 @@
   <div class="tokens-preview">
     <div class="menu">
       <div class="tabs">
-        <button @click="activeTab = 'balances'" :class="{ active: activeTab === 'balances' }">
+        <button
+          @click="goTo('balances', $t('pages.fungible-tokens.balances-title'))"
+          :class="{ active: activeTab === 'balances' }"
+        >
           <Balances />
           <span>{{ $t('pages.fungible-tokens.balances') }}</span>
         </button>
-        <button @click="activeTab = 'all'" :class="{ active: activeTab === 'all' }">
+        <button
+          @click="goTo('all', $t('pages.fungible-tokens.all'))"
+          :class="{ active: activeTab === 'all' }"
+        >
           <Balances />
           <span>{{ $t('pages.fungible-tokens.all') }}</span>
         </button>
-        <button @click="activeTab = 'favourites'" :class="{ active: activeTab === 'favourites' }">
+        <button
+          @click="goTo('favourites', $t('pages.fungible-tokens.favourites'))"
+          :class="{ active: activeTab === 'favourites' }"
+        >
           <AddToFavourites />
           <span>{{ $t('pages.fungible-tokens.favourites') }}</span>
         </button>
@@ -152,8 +161,15 @@ export default {
     clearAndClose() {
       this.searchTerm = '';
       this.search = false;
-    }
-  }
+    },
+    goTo(tab, title) {
+      this.activeTab = tab;
+      this.$store.commit('setPageTitle', title);
+    },
+  },
+  destroyed() {
+    this.$store.commit('setPageTitle', '');
+  },
 };
 </script>
 

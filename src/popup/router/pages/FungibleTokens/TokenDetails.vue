@@ -94,7 +94,10 @@ export default {
     return pick(this.$store.state.observables, ['tokenBalance', 'balanceCurrency']);
   },
   mounted() {
-    this.$store.commit('setPageTitle', this.fungibleToken ? this.fungibleToken.name : 'Aeternity');
+    this.$store.commit(
+      'setPageTitle',
+      this.availableTokens[this.id] ? this.availableTokens[this.id].name : 'Aeternity',
+    );
   },
   computed: {
     ...mapGetters(['tippingSupported', 'formatCurrency']),
