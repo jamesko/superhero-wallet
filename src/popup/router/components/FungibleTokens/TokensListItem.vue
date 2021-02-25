@@ -11,7 +11,10 @@
       <span>{{ tokenData.symbol }}</span>
     </div>
     <div class="details">
-      <TokenAmount :amount="+tokenData.convertedBalance || 0" :symbol="tokenData.symbol" />
+      <TokenAmount
+        :amount="+tokenData.convertedBalance || 0"
+        v-bind="!isFavourites && { symbol: tokenData.symbol }"
+      />
       <AddToFavourites
         v-if="isFavourites"
         :class="{ active: favouriteTokens.includes(tokenData.contract) }"
@@ -88,6 +91,7 @@ export default {
     width: 24px;
     height: 24px;
     color: $color-dark-grey;
+    margin-left: 8px;
 
     &.active {
       color: $color-green;

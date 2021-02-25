@@ -27,14 +27,14 @@ export default {
     },
     ...mapState({
       amountFiat(state, { convertToCurrency, formatCurrency }) {
-        if (this.symbol !== 'AE') return false;
+        // if (this.symbol !== 'AE') return false;
         const converted = convertToCurrency(this.amount);
-        if (converted < 0.01 || this.hideFiat) return false;
+        // if (converted < 0.01) return false;
         return formatCurrency(converted);
       },
     }),
     text() {
-      if (this.amountFiat) return `(≈${this.amountFiat})`;
+      if (this.amountFiat !== false) return `(≈${this.amountFiat})`;
       if (this.altText) return `(${this.altText})`;
       return false;
     },

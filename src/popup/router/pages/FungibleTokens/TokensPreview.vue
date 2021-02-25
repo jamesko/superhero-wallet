@@ -2,24 +2,11 @@
   <div class="tokens-preview">
     <div class="menu">
       <div class="tabs">
-        <button
-          @click="goTo('balances', $t('pages.fungible-tokens.balances-title'))"
-          :class="{ active: activeTab === 'balances' }"
-        >
+        <button @click="activeTab = 'balances'" :class="{ active: activeTab === 'balances' }">
           <Balances />
           <span>{{ $t('pages.fungible-tokens.balances') }}</span>
         </button>
-        <button
-          @click="goTo('all', $t('pages.fungible-tokens.all'))"
-          :class="{ active: activeTab === 'all' }"
-        >
-          <Balances />
-          <span>{{ $t('pages.fungible-tokens.all') }}</span>
-        </button>
-        <button
-          @click="goTo('favourites', $t('pages.fungible-tokens.favourites'))"
-          :class="{ active: activeTab === 'favourites' }"
-        >
+        <button @click="activeTab = 'favourites'" :class="{ active: activeTab === 'favourites' }">
           <AddToFavourites />
           <span>{{ $t('pages.fungible-tokens.favourites') }}</span>
         </button>
@@ -95,7 +82,7 @@ export default {
     return {
       search: false,
       searchTerm: '',
-      activeTab: 'all',
+      activeTab: 'balances',
       sortingBy: '',
     };
   },
@@ -109,7 +96,7 @@ export default {
       'aePublicData',
       'favouriteTokens',
     ]),
-    ...mapGetters(['account']),
+    ...mapGetters(['account', 'formatCurrency']),
 
     /**
      * Returns the default aeternity meta information
@@ -140,10 +127,7 @@ export default {
       }));
     },
     tokenList() {
-      return [
-        ...this.aeternityToken,
-        ...(this.activeTab === 'balances' ? this.tokenBalances : this.tokenInfo),
-      ]
+      return [...this.aeternityToken, ...this.tokenInfo]
         .sort((a, b) => {
           switch (this.sortingBy) {
             case 'price':
@@ -153,7 +137,7 @@ export default {
           }
         })
         .filter((t) =>
-          this.activeTab === 'favourites' ? this.favouriteTokens.includes(t.contract) : true,
+          this.activeTab === 'balances' ? this.favouriteTokens.includes(t.contract) : true,
         );
     },
   },
@@ -162,13 +146,6 @@ export default {
       this.searchTerm = '';
       this.search = false;
     },
-    goTo(tab, title) {
-      this.activeTab = tab;
-      this.$store.commit('setPageTitle', title);
-    },
-  },
-  destroyed() {
-    this.$store.commit('setPageTitle', '');
   },
 };
 </script>
@@ -351,6 +328,7 @@ export default {
     }
 
     .account-balance {
+      width: 360px;
       display: flex;
       align-items: center;
       justify-content: space-between;
