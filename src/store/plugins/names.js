@@ -12,6 +12,7 @@ export default (store) => {
     state: {
       owned: [],
       defaults: {},
+      pendingAutoExtendNames: [],
     },
     getters: {
       getDefault: ({ defaults }, getters, { sdk }, { activeNetwork }) => (address) => {
@@ -35,10 +36,13 @@ export default (store) => {
         const index = state.owned.findIndex((n) => n.name === name);
         Vue.set(state.owned[index], 'autoExtend', value);
       },
+      setPendingAutoExtendName(state, name) {
+        state.pendingAutoExtendNames.push(name);
+      },
     },
     actions: {
       async fetchOwned({
-        state: { owned },
+        state: { owned, pendingAutoExtendNames },
         rootGetters: { accounts },
         rootState: { middleware },
         commit,
@@ -61,7 +65,8 @@ export default (store) => {
               expiresAt: info.expireHeight,
               owner: info.ownership.current,
               pointers: info.pointers,
-              autoExtend: owned.find((n) => n.name === name)?.autoExtend,
+              autoExtend: owned.find((n) => n.name === name)?.autoExtend
+               || pendingAutoExtendNames?.includes(name),
               name,
             }))),
           ])),
