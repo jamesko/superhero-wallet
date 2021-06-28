@@ -6,11 +6,12 @@
     <div class="header">
       <span class="title">{{ $t('pages.recentTransactions.title') }}</span>
       <router-link
+        v-if="transactions.latest.length || transactions.pending.length"
         to="/transactions"
         data-cy="view-all-transactions"
         class="view-all"
       >
-        <TxHistory class="icon" />
+        {{ $t('pages.recentTransactions.viewAll') }} <TxHistory class="icon" />
       </router-link>
     </div>
     <TransactionList
@@ -30,7 +31,7 @@ export default {
     TransactionList,
     TxHistory,
   },
-  computed: mapState(['tourStartBar']),
+  computed: mapState(['tourStartBar', 'transactions']),
 };
 </script>
 
@@ -46,12 +47,19 @@ export default {
   overflow-y: scroll;
 
   .header {
-    padding: 21px 16px 11px 16px;
+    height: 48px;
+    position: fixed;
+    width: 100%;
+    padding: 8px 16px 8px 16px;
     background: variables.$color-bg-2;
     border-radius: 0 0 4px 4px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+
+    @include mixins.desktop {
+      width: variables.$extension-width;
+    }
 
     .title {
       @extend %face-sans-15-medium;
@@ -60,22 +68,30 @@ export default {
     }
 
     .view-all {
-      width: 24px;
-      height: 24px;
-      padding: 0;
-      cursor: pointer;
+      display: flex;
+      padding: 4px 8px;
+      border-radius: 16px;
+      background: variables.$color-bg-1;
       text-decoration: none;
+      color: variables.$color-dark-grey;
+      transition: all 0.12s ease-out;
+
+      @extend %face-sans-15-medium;
 
       .icon {
-        fill: variables.$color-white;
+        margin-left: 4px;
+        width: 24px;
+        color: variables.$color-white;
         opacity: 0.7;
       }
 
-      &:hover .icon {
-        opacity: 1;
+      &:hover {
+        color: variables.$color-green;
+        background: rgba(0, 255, 157, 0.1);
 
-        path {
-          fill: variables.$color-green-hover;
+        .icon {
+          opacity: 1;
+          color: variables.$color-green-hover;
         }
       }
     }
