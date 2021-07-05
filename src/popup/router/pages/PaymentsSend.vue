@@ -8,7 +8,7 @@
         v-model.trim="form.address"
         class="address"
         :placeholder="$t('pages.send.address-placeholder')"
-        :error="!!form.address.length && !validAddress"
+        :error="!!form.address.length && !validAddress || nameNotExist"
         :error-message="$t('pages.send.address-error')"
         :warning="sameAddress"
         :warning-message="$t('pages.send.same-address')"
@@ -152,7 +152,7 @@ export default {
         address: '',
         amount: '',
       },
-      amountErrorMessage: '',
+      nameNotExist: false,
       sameAddress: false,
       loading: false,
       fee: BigNumber(0),
@@ -200,7 +200,13 @@ export default {
   methods: {
     checkSameAddress: debounce(
       async function handler(value) {
-        this.sameAddress = this.account.address === await this.$store.dispatch('names/getAddress', value);
+        const address = await this.$store.dispatch('names/getAddress', value);
+        this.nameNotExist = false;
+        if (!address) {
+          this.nameNotExist = true;
+          return;
+        }
+        this.sameAddress = this.account.address === address;
       },
       300,
     ),
