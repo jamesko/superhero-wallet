@@ -258,6 +258,7 @@ export default [
     props: true,
     meta: {
       title: 'tx-details',
+      hideTabBar: true,
     },
   },
   {
@@ -365,6 +366,7 @@ export default [
       title: 'names',
       notPersist: true,
       notRebrand: true,
+      hideTabBar: true,
     },
   },
   {
@@ -376,6 +378,7 @@ export default [
       title: 'bidding',
       notPersist: true,
       notRebrand: true,
+      hideTabBar: true,
     },
   },
   {
@@ -386,6 +389,7 @@ export default [
     meta: {
       title: 'names',
       notRebrand: true,
+      hideTabBar: true,
     },
   },
   {
