@@ -202,6 +202,7 @@ export default [
       meta: {
         title: 'tips',
         notRebrand: true,
+        backButton: false,
       },
     }, {
       path: 'claim',
@@ -210,6 +211,7 @@ export default [
       meta: {
         title: 'tips',
         notRebrand: true,
+        backButton: false,
       },
     }],
   },
@@ -269,6 +271,7 @@ export default [
       meta: {
         title: 'transfer',
         notRebrand: true,
+        backButton: false,
       },
     }, {
       path: 'receive',
@@ -277,6 +280,7 @@ export default [
       meta: {
         title: 'transfer',
         notRebrand: true,
+        backButton: false,
       },
     }],
   },
@@ -297,6 +301,7 @@ export default [
     name: 'more',
     meta: {
       title: 'more',
+      backButton: false,
     },
   },
   {
@@ -326,6 +331,7 @@ export default [
     meta: {
       title: 'names',
       notRebrand: true,
+      backButton: false,
     },
   },
   {
@@ -336,6 +342,7 @@ export default [
     meta: {
       title: 'names',
       notRebrand: true,
+      backButton: false,
     },
   },
   {
@@ -346,6 +353,7 @@ export default [
     meta: {
       title: 'names',
       notRebrand: true,
+      backButton: false,
     },
   },
   {
@@ -417,6 +425,7 @@ export default [
     component: Balances,
     meta: {
       title: 'balances',
+      backButton: false,
     },
   },
   {
