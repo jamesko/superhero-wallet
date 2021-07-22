@@ -127,4 +127,10 @@ export default {
     }
   }
 }
+
+@media screen and (max-height: 250px) {
+  .tab-bar {
+    display: none;
+  }
+}
 </style>
